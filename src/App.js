@@ -1,23 +1,45 @@
-import logo from './logo.svg';
+import React, { useState, useEffect, useCallback } from "react";
+
 import './App.css';
+import { AppContext } from "./lib/contextLib";
+import Routes from "./Routes";
+import {
+  getTvShows
+} from "./services/tvshows";
 
 function App() {
+  const [tvShows, setTvShows] = useState([]);
+  const [actions] = useState({
+
+    onUpdateTvShows: (data) => {
+      setTvShows(data);
+    }
+
+  });
+
+  // useEffect(() => {
+  //   async function  fetchData() {
+     
+  //     const response =  await getTvShows('boys');
+  //     setTvShows(response);
+
+  //   }
+  //   fetchData();
+  // }, []); 
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     
+
+      <AppContext.Provider
+        value={{
+          tvShows,
+          actions
+        }}
+      >
+        <Routes />
+      </AppContext.Provider>
+
     </div>
   );
 }
